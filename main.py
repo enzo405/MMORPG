@@ -1,9 +1,11 @@
+import random
+
 class Personnage():
     def __init__(self, pseudo:str, niveau:int, pdv:int, initiative:int) -> None:
-        self.pseudo = pseudo
-        self.niveau = niveau 
-        self.pdv = pdv
-        self.initiative = initiative
+        self.pseudo = str(pseudo)
+        self.niveau = int(niveau)
+        self.pdv = int(pdv)
+        self.initiative = int(initiative)
 
     def __str__(self) -> str:
         return (f"{self.pseudo} niveau {self.niveau} avec {self.pdv} points de vie. Initiative {self.initiative}")
@@ -46,13 +48,18 @@ class Personnage():
     def combat(player1, player2):
         while int(player1.pdv) > 0 and int(player2.pdv) > 0:
             player1.attaquer(player2)
+        print(player1)
+        print(player2)
 
-
-    def soigner(self, soin):
+    def soigner(self):
+        soin = random.randint(1,self.niveau)
+        self.pdv = self.pdv + soin
+        print(f"{self.pseudo} vient de se soigner de {soin} pdv")
         return
 
 kevinou = Personnage("Kevan","10", "100", "11")
 raphou = Personnage("Raphael","12", "100", "10")
 
-
+raphou.attaquer(kevinou)
+kevinou.soigner()
 kevinou.combat(raphou)
