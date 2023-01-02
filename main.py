@@ -66,11 +66,7 @@ class Character():
 
 class Guerrier(Character):
     def __init__(self, pseudo:str, level:int) -> None:
-        self.pseudo = pseudo
-        self.level = level
-        self.hp = level * 8 + 4
-        self.initiative = level * 4 + 6
-        super().__init__(self.pseudo, self.level, self.hp, self.initiative)
+        super().__init__(pseudo,level, level * 8 + 4, level * 4 + 6)
 
     def __str__(self) -> str:
         return (f"Type Guerrier => {self.pseudo} level {self.level} with {self.hp} health. Initiative {self.initiative}. Mana {self.mana}")
@@ -82,13 +78,7 @@ class Guerrier(Character):
 
 class Mage(Character):
     def __init__(self, pseudo:str, level:int) -> None:
-        self.pseudo = pseudo
-        self.level = level
-        self.hp = level * 5 + 10
-        self.initiative = level * 6 + 4
-        self.mana = level * 5
-        super().__init__(self.pseudo, self.level, self.hp, self.initiative, self.mana)
-
+        super().__init__(pseudo, level, level * 5 + 10, level * 6 + 4, level * 5)
 
     def __str__(self) -> str:
         return (f"Type Mage => {self.pseudo} level {self.level} with {self.hp} health. Initiative {self.initiative}. Mana {self.mana}")
@@ -168,21 +158,17 @@ class Player():
         p1_list = self.character
         p2_list = player.character
         for i in range(len(p1_list)+len(p2_list)):
-            for p1 in range(len(p1_list)):
-                if p1_list[p1].hp > 0:
-                    p1_fight = p1_list[p1]
-                elif p1_list[p1].hp <= 0:
-                    p1_list.pop(p1)
-            for p2 in range(len(p2_list)):
-                if p2_list[p2].hp > 0:
-                    p2_fight = p2_list[p2]
-                elif p2_list[p2].hp <= 0:
-                    p2_list.pop(p2)
-            p1_fight.fight(p2_fight)
+            if p1_list[0].hp <= 0:
+                p1_list.pop(0)
+            if p2_list[0].hp <= 0:
+                p2_list.pop(0)
             if len(p1_list) == 0:
                 print(f"{self.name} lost against {player.name}")
+                break
             elif len(p2_list) == 0:
                 print(f"{player.name} lost against {self.name}")
+                break
+            p1_list[0].fight(p2_list[0])
         return
     
 
